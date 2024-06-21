@@ -1,13 +1,11 @@
 {
   "files": {
-    "main.css": "/difm_vs_yt/static/css/main.6c4f4c24.css",
-    "main.js": "/difm_vs_yt/static/js/main.59143966.js",
-    "index.html": "/difm_vs_yt/index.html",
-    "main.6c4f4c24.css.map": "/difm_vs_yt/static/css/main.6c4f4c24.css.map",
-    "main.59143966.js.map": "/difm_vs_yt/static/js/main.59143966.js.map"
+    "main.css": "/my101ru/static/css/index-CbLoFok1.css",
+    "main.js": "/my101ru/static/js/index-ockjgucV.js",
+    "index.html": "/my101ru/index.html",
   },
   "entrypoints": [
-    "static/css/main.6c4f4c24.css",
-    "static/js/main.59143966.js"
+    "static/css/index-CbLoFok1.css",
+    "static/js/index-ockjgucV.js"
   ]
 }
