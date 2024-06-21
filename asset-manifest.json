@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/difm_vs_yt/static/css/main.6c4f4c24.css",
+    "main.js": "/difm_vs_yt/static/js/main.59143966.js",
+    "index.html": "/difm_vs_yt/index.html",
+    "main.6c4f4c24.css.map": "/difm_vs_yt/static/css/main.6c4f4c24.css.map",
+    "main.59143966.js.map": "/difm_vs_yt/static/js/main.59143966.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.6c4f4c24.css",
+    "static/js/main.59143966.js"
+  ]
+}
