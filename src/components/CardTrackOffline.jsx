@@ -12,14 +12,6 @@ const CardTrackOffline = observer(({ data }) => {
     localStorage.setItem("removedTracks", JSON.stringify(removedTracks));
   };
 
-  const addFavorite = () => {
-    console.log("Add to favorite!", data.mdbUidTrack);
-    let favoriteTracks =
-      JSON.parse(localStorage.getItem("favoriteTracks")) || [];
-    favoriteTracks.push(data.mdbUidTrack);
-    localStorage.setItem("favoriteTracks", JSON.stringify(favoriteTracks));
-  };
-
   const setPlayer = () => {
     console.log(data);
     station.currentPlaying = data;
@@ -53,7 +45,7 @@ const CardTrackOffline = observer(({ data }) => {
             </a> */}
 
             {/* <button onClick={() => removeTrack()}>Скрыть</button> */}
-            <button onClick={() => addFavorite()}>Фэворит</button>
+            <button onClick={() => station.addFavorite()}>Фэворит</button>
           </div>
         )}
       </div>

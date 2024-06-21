@@ -9,6 +9,14 @@ const Player = observer(() => {
       JSON.stringify(station.currentPlaying)
     );
     document.title = `${station.currentPlaying?.title}`;
+
+    console.log("timer on", station.currentPlaying?.duration);
+
+    let timerId = setTimeout(() => {
+      console.log("timer off!");
+      clearTimeout(timerId);
+      station.nextTrack();
+    }, station.currentPlaying?.duration * 1000);
   }, [station.currentPlaying]);
 
   return (
@@ -24,6 +32,10 @@ const Player = observer(() => {
           autoPlay
           src={station.currentPlaying?.audiofile}
         ></audio>
+        <p>{station.currentPlaying?.duration}</p>
+        <button onClick={() => station.nextTrack()}>Вперед</button>
+        <button onClick={() => station.addFavorite()}>Фэворит</button>
+
         <button onClick={() => (station.id = 151)}>
           Тут будет настоящий плеер
         </button>

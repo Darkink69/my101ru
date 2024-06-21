@@ -12,17 +12,20 @@ const AllTracksStation = observer(() => {
   const [showTracks, setShowTracks] = useState(0);
   const [shownCurrentTracks, setShownCurrentTracks] = useState([]);
 
-  const handleRemoveOne = () => {
-    console.log(station.currentPlaying.mdbUidTrack);
+  const resetSearch = () => {
+    setTrackData(station.jsonData);
+    setShowTracks(50);
+    setIsLoaded(true);
   };
 
   const onSearch = (value, _e, info) => {
-    const x = trackData;
-    if (value.length === 0) {
-      console.log(value.length, "!!");
-      // setTrackData(x);
-    }
-    // console.log(x);
+    // if (value.length === 0) {
+    //   console.log(value.length, "!!");
+    //   setTrackData(station.jsonData);
+    //   setShowTracks(50);
+    //   setIsLoaded(true);
+    // }
+
     const resultSearch = [];
     const wordsSearch = value.toLowerCase().split(" ");
     // console.log(wordsSearch);
@@ -36,12 +39,10 @@ const AllTracksStation = observer(() => {
         console.log(item.title);
         resultSearch.push(item);
       }
-      // console.log(filteredArray);
     });
 
     setTrackData(resultSearch);
     setShowTracks(resultSearch.length);
-    // setTrackData(trackData);
   };
 
   const shuffleTracks = () => {
@@ -59,35 +60,14 @@ const AllTracksStation = observer(() => {
   };
 
   useEffect(() => {
-    let removedTracks = JSON.parse(localStorage.getItem("removedTracks")) || [];
-    const idStation = localStorage.getItem("idStation") || 74;
-    const JsonStation = {
-      1: "80x",
-      74: "eurodance",
-      79: "cyber_space",
-      151: "rave",
-    };
-    const nameJsonStation = JsonStation[idStation];
+    station.fetchJsonData();
+  }, [station.nameStation]);
 
-    fetch(
-      `https://raw.githubusercontent.com/Darkink69/selenium_101ru/main/db101_${nameJsonStation}.json`
-    )
-      .then((response) => response.json())
-      .then((data) => {
-        const tracks = [];
-        data.tracks.map((i) => {
-          const keyTrack = Object.keys(i)[0];
-          if (!removedTracks.includes(i[keyTrack].mdbUidTrack)) {
-            tracks.push(i[keyTrack]);
-          }
-          setTrackData(tracks);
-          // handleRemoveOne();
-          setShowTracks(50);
-          setIsLoaded(true);
-        });
-      })
-      .catch((error) => console.error(error));
-  }, [station.nameStation, station.id, isLoaded]);
+  useEffect(() => {
+    setTrackData(station.jsonData);
+    setShowTracks(50);
+    setIsLoaded(true);
+  }, [station.jsonData]);
 
   useEffect(() => {
     setShownCurrentTracks(trackData?.slice(0, showTracks));
@@ -107,7 +87,7 @@ const AllTracksStation = observer(() => {
   return (
     <>
       <button onClick={() => doIt()}>КНОПКА</button>
-      <button onClick={() => handleRemoveOne()}>КНОПКА2</button>
+      <button onClick={() => station.x()}>КНОПКА2</button>
       <h1 className="font-mono text-xl text-center text-slate-600 decoration-solid pt-8 pb-4">
         Все треки радиостанции «{station.nameStation}»
       </h1>
@@ -130,15 +110,15 @@ const AllTracksStation = observer(() => {
         placeholder="Поиск треков"
         onSearch={onSearch}
         style={{ width: 200 }}
-        allowClear={true}
+        // allowClear={true}
       />
 
-      {/* <button
-        className="px-4 py-2 ml-2 text-center font-semibold text-sm bg-sky-500 text-white rounded-md shadow-sm opacity-100"
-        onClick={() => reverseTracks()}
+      <button
+        className="px-4 py-2 ml-2 text-center font-semibold text-sm text-slate-600"
+        onClick={() => resetSearch()}
       >
         Сбросить
-      </button> */}
+      </button>
 
       <div className="grid sm:grid-cols-5 grid-cols-2 gap-4 pt-4">
         {isLoaded ? (
