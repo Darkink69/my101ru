@@ -4,8 +4,9 @@ class Station {
     id = localStorage.getItem("idStation") || 74
     tracks = []
     lastRemovedTrack = 0
-    currentPlaying = JSON.parse(localStorage.getItem("currentPlaying")) || {title:'', cover:'', audiofile:''};
-    nameStation = 'Авторадио. Дискотека 90-х'
+    currentPlaying = JSON.parse(localStorage.getItem("currentPlaying")) || {title:'', cover:'', audiofile:''}
+    // currentPlaying = currentPlaying === undefined ? {title:'', cover:'', audiofile:''}: JSON.parse(localStorage.getItem("currentPlaying")) 
+    nameStation = '...'
     jsonData = {}
 
     constructor() {

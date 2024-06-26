@@ -12,6 +12,19 @@ const AllTracksStation = observer(() => {
   const [showTracks, setShowTracks] = useState(0);
   const [shownCurrentTracks, setShownCurrentTracks] = useState([]);
 
+  const setFavoriteTracks = () => {
+    const favoriteTracks = JSON.parse(localStorage.getItem("favoriteTracks"));
+    const tracks = [];
+    trackData.map((i) => {
+      if (favoriteTracks.includes(i.mdbUidTrack)) {
+        tracks.push(i);
+        console.log(i.title);
+      }
+    });
+    setTrackData(tracks);
+    setShowTracks(tracks.length);
+  };
+
   const resetSearch = () => {
     setTrackData(station.jsonData);
     setShowTracks(50);
@@ -86,39 +99,50 @@ const AllTracksStation = observer(() => {
 
   return (
     <>
-      <button onClick={() => doIt()}>КНОПКА</button>
-      <button onClick={() => station.x()}>КНОПКА2</button>
-      <h1 className="font-mono text-xl text-center text-slate-600 decoration-solid pt-8 pb-4">
+      <div className="flex items-center p-10">
+        <button
+          className="px-4 py-2 text-center font-semibold text-sm bg-sky-500 text-white rounded-md shadow-sm opacity-100"
+          onClick={() => shuffleTracks()}
+        >
+          Перемешать
+        </button>
+
+        <button
+          className="px-4 py-2 ml-2 text-center font-semibold text-sm bg-sky-500 text-white rounded-md shadow-sm opacity-100"
+          onClick={() => reverseTracks()}
+        >
+          Развернуть
+        </button>
+
+        <Search
+          className="pl-4"
+          placeholder="Поиск треков"
+          onSearch={onSearch}
+          style={{ width: 200 }}
+          // allowClear={true}
+        />
+
+        <button
+          className="px-4 py-2 ml-2 text-center font-semibold text-sm text-slate-600"
+          onClick={() => resetSearch()}
+        >
+          Все треки
+        </button>
+
+        <p
+          className="px-4 py-2 ml-2 text-center font-semibold text-sm text-slate-600 cursor-pointer"
+          onClick={() => setFavoriteTracks()}
+        >
+          Любимые треки
+        </p>
+        <p className="px-4 py-2 ml-2 text-center font-semibold text-sm text-slate-600">
+          Скрытые треки
+        </p>
+      </div>
+
+      <h1 className="font-mono text-xl text-center text-slate-600 decoration-solid pt-2 pb-4">
         Все треки радиостанции «{station.nameStation}»
       </h1>
-      <button
-        className="px-4 py-2 text-center font-semibold text-sm bg-sky-500 text-white rounded-md shadow-sm opacity-100"
-        onClick={() => shuffleTracks()}
-      >
-        Перемешать
-      </button>
-
-      <button
-        className="px-4 py-2 ml-2 text-center font-semibold text-sm bg-sky-500 text-white rounded-md shadow-sm opacity-100"
-        onClick={() => reverseTracks()}
-      >
-        Развернуть
-      </button>
-
-      <Search
-        className="pl-4"
-        placeholder="Поиск треков"
-        onSearch={onSearch}
-        style={{ width: 200 }}
-        // allowClear={true}
-      />
-
-      <button
-        className="px-4 py-2 ml-2 text-center font-semibold text-sm text-slate-600"
-        onClick={() => resetSearch()}
-      >
-        Сбросить
-      </button>
 
       <div className="grid sm:grid-cols-5 grid-cols-2 gap-4 pt-4">
         {isLoaded ? (
@@ -137,6 +161,8 @@ const AllTracksStation = observer(() => {
       >
         Показать еще
       </button>
+      <button onClick={() => doIt()}>КНОПКА</button>
+      <button onClick={() => station.x()}>КНОПКА2</button>
     </>
   );
 });

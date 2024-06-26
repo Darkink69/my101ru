@@ -2,6 +2,7 @@ import { observer } from "mobx-react-lite";
 import { useEffect, useState } from "react";
 import station from "../store/station";
 import { CloseCircleOutlined } from "@ant-design/icons";
+import { Image } from "antd";
 
 const CardTrackOffline = observer(({ data }) => {
   const removeTrack = () => {
@@ -37,15 +38,15 @@ const CardTrackOffline = observer(({ data }) => {
             <p className="mt-2 text-sm text-center text-slate-600">
               {data.album.albumTitle}
             </p>
-            <img className="w-full rounded-xl" src={data.cover.cover400}></img>
-            {/* <p>{data.mdbUidTrack}</p> */}
-            {/* <audio controls src={dataTrack.result.short.audiofile}></audio> */}
-            {/* <a href={data.audiofile} target="_blank">
-              Download
-            </a> */}
+            <Image
+              className="w-full rounded-xl"
+              width={200}
+              src={data.cover.cover400}
+            />
+            {/* <img className="w-full rounded-xl" src={data.cover.cover400}></img> */}
 
             {/* <button onClick={() => removeTrack()}>Скрыть</button> */}
-            <button onClick={() => station.addFavorite()}>Фэворит</button>
+            {/* <button onClick={() => station.addFavorite()}>Фэворит</button> */}
           </div>
         )}
       </div>

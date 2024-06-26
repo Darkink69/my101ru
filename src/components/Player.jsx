@@ -1,22 +1,31 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { observer } from "mobx-react-lite";
 import station from "../store/station";
 
 const Player = observer(() => {
+  const timerIdRef = useRef(null);
+
   useEffect(() => {
-    localStorage.setItem(
-      "currentPlaying",
-      JSON.stringify(station.currentPlaying)
-    );
+    if (station.currentPlaying !== undefined) {
+      localStorage.setItem(
+        "currentPlaying",
+        JSON.stringify(station.currentPlaying)
+      );
+    }
+
     document.title = `${station.currentPlaying?.title}`;
 
     console.log("timer on", station.currentPlaying?.duration);
 
-    let timerId = setTimeout(() => {
+    timerIdRef.current = setTimeout(() => {
       console.log("timer off!");
-      clearTimeout(timerId);
       station.nextTrack();
-    }, station.currentPlaying?.duration * 1000);
+    }, station.currentPlaying?.duration * 1000 + 5000);
+    return () => {
+      timerIdRef.current && clearTimeout(timerIdRef.current);
+      timerIdRef.current = null;
+      console.log("timer clear?");
+    };
   }, [station.currentPlaying]);
 
   return (
@@ -32,9 +41,13 @@ const Player = observer(() => {
           autoPlay
           src={station.currentPlaying?.audiofile}
         ></audio>
-        <p>{station.currentPlaying?.duration}</p>
-        <button onClick={() => station.nextTrack()}>Вперед</button>
-        <button onClick={() => station.addFavorite()}>Фэворит</button>
+        {/* <p>{station.currentPlaying?.duration}</p> */}
+        <button onClick={() => station.nextTrack()} className="text-white">
+          Вперед
+        </button>
+        <button onClick={() => station.addFavorite()} className="text-white">
+          Добавить в любимые
+        </button>
 
         <button onClick={() => (station.id = 151)}>
           Тут будет настоящий плеер
